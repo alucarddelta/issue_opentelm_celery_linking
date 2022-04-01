@@ -1,0 +1,88 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "app1",
+            "type": "python",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "app1.main:app", "--reload", "--host", "0.0.0.0", "--port", "5001"
+            ],
+            "jinja": true,
+            "env": {
+            }
+        },
+        {
+            "name": "app2",
+            "type": "python",
+            "request": "launch",
+            "module": "celery",
+            "console": "integratedTerminal",
+            "args": [
+                "-A",
+                "app2.main",
+                "worker",
+                "--loglevel=INFO",
+                "--pool=prefork",
+                // "--pool=solo",  // This allows running a celery worker on Windows without creating a Windows Service.
+                "--concurrency=1",
+                "-n",
+                "trace_test@%h",
+                "--task-events",
+            ],
+            "env": {
+            },
+        },
+        {
+            "name": "app3",
+            "type": "python",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "app3.main:app", "--reload", "--host", "0.0.0.0", "--port", "5003"
+            ],
+            "jinja": true,
+            "env": {
+            }
+        },
+        {
+            "name": "app4",
+            "type": "python",
+            "request": "launch",
+            "module": "celery",
+            "console": "integratedTerminal",
+            "args": [
+                "-A",
+                "app4.main",
+                "worker",
+                "--loglevel=INFO",
+                "--pool=prefork",
+                // "--pool=solo",  // This allows running a celery worker on Windows without creating a Windows Service.
+                "--concurrency=1",
+                "-n",
+                "trace_test@%h",
+                "--task-events",
+            ],
+            "env": {
+            },
+        },
+		{
+			"name": "Python: Current File",
+			"type": "python",
+			"request": "launch",
+			"program": "${file}",
+			"console": "integratedTerminal",
+			"cwd": "${workspaceFolder}",
+			"env": {
+				"PICKLE_PROTOCOL": "5",
+				"PYTHONPATH": "${cwd}",
+				"DEPLOY_STAGE": "LOCAL",
+				"LOG_LEVEL": "DEBUG",
+			},
+		},
+    ]
+}
